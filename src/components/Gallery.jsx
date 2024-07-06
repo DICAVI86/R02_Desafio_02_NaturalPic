@@ -3,6 +3,8 @@ import { useState, useEffect, Image } from 'react';
 import photos from '/photos.json?url';
 import '../gallery.css'
 import IconHeart from './IconHeart';
+import { useContext } from 'react';
+import { LikeContext } from '../context/LikeContext'
 
 
 const Gallery = () => {
@@ -30,7 +32,7 @@ const getData = async () => {
           <Card className="bg-dark text-white" key={index}>
             <Card.Img className='img-fluid img-size' src={photo.src.medium} alt="Card image" />
             <Card.ImgOverlay>
-              {/* <Image src='../assets/icons/heart.svg' /> */}
+              <IconHeart />
               <Card.Text className='text-end '>
                 {photo.alt}
               </Card.Text>

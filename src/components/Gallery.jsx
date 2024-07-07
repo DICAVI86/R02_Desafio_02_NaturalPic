@@ -1,6 +1,5 @@
 import Card from 'react-bootstrap/Card';
-import { useState, useEffect, Image } from 'react';
-import photos from '/photos.json?url';
+import { useState, useEffect,} from 'react';
 import '../gallery.css'
 import IconHeart from './IconHeart';
 import { useContext } from 'react';
@@ -10,11 +9,13 @@ import { LikeContext } from '../context/LikeContext'
 const Gallery = () => {
 
   const [data, setData] = useState([]);
-
+  const { likes, setLikes } = useContext(LikeContext);
 
   useEffect(() => {
     getData();
 }, []);
+
+
 
 const getData = async () => {
     const response = await fetch('/photos.json'); 
@@ -32,10 +33,10 @@ const getData = async () => {
           <Card className="bg-dark text-white" key={index}>
             <Card.Img className='img-fluid img-size' src={photo.src.medium} alt="Card image" />
             <Card.ImgOverlay>
-              <IconHeart />
               <Card.Text className='text-end '>
                 {photo.alt}
               </Card.Text>
+              <IconHeart photo={photo} />
             </Card.ImgOverlay>
           </Card>
         ))}

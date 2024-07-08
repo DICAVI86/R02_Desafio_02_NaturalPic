@@ -7,15 +7,23 @@ const LikeProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
 
   const toggleFavorite = (photo) => {
+    let updatedFavorites;
     if (isFavorite(photo)) {
-      setFavorites(favorites.filter(item => item.id !== photo.id));
+
+      updatedFavorites = favorites.filter(item => item.id !== photo.id);
+      console.log('Remover de favoritos', photo);
     } else {
-      setFavorites([...favorites, photo]);
+      // Agregar la foto a favorites si no está presente
+      updatedFavorites = [...favorites, photo];
+      console.log('Añadir a favoritos', photo);
     }
+    setFavorites(updatedFavorites);
   };
 
   const isFavorite = (photo) => {
-    return favorites.some(fav => fav.id === photo.id);
+    const isFav = favorites.some(fav => fav.id === photo.id);
+   
+    return isFav;
   };
 
   return (

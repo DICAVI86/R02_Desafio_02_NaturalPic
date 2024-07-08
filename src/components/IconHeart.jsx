@@ -1,10 +1,15 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { LikeContext } from '../context/LikeContext';
 
 function IconHeart({ photo }) {
   const { toggleFavorite, isFavorite } = useContext(LikeContext);
 
   const handleClick = () => {
+    if (!photo.id) {
+      console.error('La foto no tiene ID', photo);
+      return;
+    }
+    console.log('Toggling favorito', photo);
     toggleFavorite(photo);
   };
 

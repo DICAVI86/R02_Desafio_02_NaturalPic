@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { LikeContext } from '../context/LikeContext';
+import LikeProvider from '../context/LikeContext';
 
 function IconHeart({ photo }) {
   const { toggleFavorite, isFavorite } = useContext(LikeContext);
@@ -14,6 +15,7 @@ function IconHeart({ photo }) {
   };
 
   return (
+    <LikeProvider>
     <a onClick={handleClick} style={{ cursor: 'pointer' }}>
       <svg width="40px" viewBox="0 0 24 24">
         <path
@@ -22,6 +24,7 @@ function IconHeart({ photo }) {
         />
       </svg>
     </a>
+    </LikeProvider>
   );
 }
 

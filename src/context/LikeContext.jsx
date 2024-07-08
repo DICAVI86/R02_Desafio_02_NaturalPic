@@ -1,46 +1,28 @@
-import React, { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from "react";
+
 
 export const LikeContext = createContext();
 
-const LikeProvider = ({ children }) => {
-  const [favorites, setFavorites] = useState([]);
+const FotosProvider = ({ children }) => {
+  const [photos, setPhotos] = useState([]);
 
-  const toggleFavorite = (photo) => {
-    if (!photo.id) {
-      console.error('Photo does not have an id:', photo);
-      return;
-    }
-  
-    let updatedFavorites;
-    if (isFavorite(photo)) {
-      updatedFavorites = favorites.filter(item => item.id !== photo.id);
-      console.log('Removed from favorites:', photo);
-    } else {
-      updatedFavorites = [...favorites, photo];
-      console.log('Added to favorites:', photo);
-    }
-    setFavorites(updatedFavorites);
-  };
+  const getFotos = async () => {
+    const response = await fetch('/photos.json'); 
 
-  const isFavorite = (photo) => {
-    const isFav = favorites.some(fav => fav.id === photo.id);
-    return isFav;
-    
-  };
+    const result = await response.json();
+    console.log(result.photos);
+    setPhotos(result.photos || []);
+};
 
-  
+  useEffect(() => {
+    getFotos();
+  }, []);
 
   return (
-    <LikeContext.Provider
-      value={{
-        favorites,
-        toggleFavorite,
-        isFavorite,
-      }}
-    >
+    <LikeContext.Provider value={{ photos, setPhotos }}>
       {children}
     </LikeContext.Provider>
   );
 };
 
-export default LikeProvider;
+export default FotosProvider;

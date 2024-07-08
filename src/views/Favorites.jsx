@@ -1,24 +1,29 @@
-import React, { useContext } from 'react';
-import { LikeContext } from '../context/LikeContext';
+import { useContext } from "react";
+import { LikeContext } from "../context/LikeContext";
 
 const Favorites = () => {
-  const { favorites } = useContext(LikeContext);
+  const { photos, setPhotos } = useContext(LikeContext);
 
-  console.log('rendering favoritos:', favorites); 
+
 
   return (
-    <div>
+    <div className="App">
       <h1>Fotos favoritas</h1>
-      <div className="p-3 gallery grid-columns-4">
-        {favorites.map((photo, index) => (
-          <div key={photo.id ? photo.id : index}>
-            <img src={photo.src.medium} alt={photo.alt} />
-          </div>
-        ))}
+      <div className="gallery grid-columns-4 p-3">
+        {photos
+          .filter((photo) => photo.isFavorite)
+          .map((photo, i) => (
+            <div
+            
+              className="photo"
+              style={{ backgroundImage: `url(${photo.src.tiny})` }}
+              key={i}
+            >
+              <p> {photo.alt} </p>
+            </div>
+          ))}
       </div>
     </div>
   );
 };
-
 export default Favorites;
-
